@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+
+<style type="text/css">
+html,
+body {
+	height:100%;
+}
+</style>
+
+<ul id="test">
+	<li>item 1</li>
+	<li>item 2</li>
+	<li>item 3</li>
+</ul>
+
+<script>
+
+var test = document.getElementById('test');
+
+test.addEventListener('mouseenter', function(e) {
+	e.target.style.color = 'purple';
+
+	setTimeout(function() {
+		e.target.style.color = '';
+	}, 500);
+}, false);
+
+test.addEventListener('mouseover', function(e) {
+	e.target.style.color = 'orange';
+
+	setTimeout(function() {
+		e.target.style.color = '';
+	}, 500);
+}, false);
+
+</script>
+
+</body>
+</html>
