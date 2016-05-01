@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+
+<style type="text/css">
+html,
+body {
+	height:100%;
+}
+</style>
+
+<div id="hello" tabindex="0" onclick="hello(this);">click here!</div>
+<div id="count" tabindex="0">click count: </div>
+
+<script>
+
+// hello
+// document.getElementById('hello').addEventListener('click', hello);
+function hello(event) {
+	event.innerHTML = 'Hello world';
+}
+
+// count
+document.getElementById('count').addEventListener('click', function(e) {
+	e.target.innerHTML = 'click count: ' + e.detail;
+}, false);
+
+</script>
+
+</body>
+</html>

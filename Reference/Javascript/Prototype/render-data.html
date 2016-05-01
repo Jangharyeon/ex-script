@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+</head>
+<body>
+
+<script>
+
+var arr = [
+	{
+		layout: '2',
+		title: '기저귀',
+		price: '19,900원',
+		sticker: 'plus'
+	},
+	{
+		layout: '3',
+		title: '나이키 신발',
+		price: '39,900원'
+	}
+];
+
+function Test(opts) {
+	this.aaa = opts.aaa;
+	this.bbb = opts.bbb;
+	this.ccc = opts.ccc;
+
+	this.initialize(opts);
+}
+
+Test.prototype = {
+	initialize: function(opts) {
+		this.render(opts);
+	},
+
+	render: function(opts) {
+		this.layout(opts);
+
+		console.log('title = ' + opts.title);
+		console.log('price = ' + opts.price);
+
+		this.sticker(opts);
+	},
+
+	layout: function(opts) {
+		if (opts.layout === '2') {
+			console.log('layout = ' + opts.layout);
+		} else if (opts.layout === '3') {
+			console.log('layout = ' + opts.layout);
+		}
+	},
+
+	sticker: function(opts) {
+		if (opts.sticker) {
+			if (opts.sticker === 'plus') {
+				console.log('sticker = ' + opts.sticker);
+			}
+		} else {
+			console.log('sticker = none');
+		}
+	}
+};
+
+var test1 = new Test(arr[0]);
+var test2 = new Test(arr[1]);
+
+// console.log(test1);
+// console.log(test2);
+
+</script>
+
+</body>
+</html>
