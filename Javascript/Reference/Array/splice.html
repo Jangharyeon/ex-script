@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<h1>splice()</h1>
+
+<script type="text/javascript">
+
+var aaa = [1,2,3,4,5,6,7];
+
+var removed = aaa.splice(2, 0, '8');
+console.log(aaa);
+
+var removed = aaa.splice(3, 1);
+console.log(aaa);
+
+var removed = aaa.splice(2, 1, '9');
+console.log(aaa);
+
+var removed = aaa.splice(0, 2, '10', '11', '12');
+console.log(aaa);
+
+var removed = aaa.splice(aaa.length -3, 2);
+console.log(aaa);
+
+</script>
+
+</body>
+</html>

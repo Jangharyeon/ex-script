@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+</head>
+<body>
+
+<style type="text/css">
+*,
+:before,
+:after {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+body {
+	min-width:900px;
+	margin:0;
+	padding:20px;
+}
+ul {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+img {
+	vertical-align:top;
+}
+
+.list-product {
+	margin-left:-20px;
+}
+.list-product:before,
+.list-product:after {
+	display:table;
+	content:'';
+}
+.list-product:after {
+	clear:both;
+}
+.list-product li {
+	float:left;
+	padding-left:20px;
+}
+.list-product.type2 li {
+	width:50%;
+}
+.list-product.type3 li {
+	width:33.3333%;
+}
+.list-product a {
+	display:block;
+	border:1px solid #ccc;
+	background-color:#f9f9f9;
+	text-decoration:none;
+}
+.list-product .thumb {
+	display:block;
+	width:100%;
+}
+.list-product span {
+	display:block;
+}
+.list-product .product-info {
+	position:relative;
+	padding:20px 20px 45px;
+}
+.list-product .title-sub {
+	font-size:11px;
+	color:#888;
+}
+.list-product .title-main {
+	padding-top:5px;
+	font-weight:bold;
+	font-size:14px;
+	color:#333;
+}
+.list-product .wrap-info {
+	padding-top:10px;
+}
+.list-product .wrap-info:before,
+.list-product .wrap-info:after {
+	display:table;
+	content:'';
+}
+.list-product .wrap-info:after {
+	clear:both;
+}
+.list-product .price-area {
+	float:left;
+	font-weight:bold;
+	font-size:20px;
+	color:#333;
+}
+.list-product .price-area .type {
+	float:left;
+	width:80px;
+	color:#f00;
+}
+.list-product .price-area .price {
+	float:left;
+}
+.list-product .price-area .won {
+	float:left;
+}
+.list-product .order-area {
+	float:right;
+	color:#f00;
+}
+.list-product .order-area .txt {
+	display:inline;
+	color:#666;
+}
+.list-product .delivery {
+	position:absolute;
+	bottom:20px;
+	left:20px;
+}
+.list-product .delivery .free {
+	display:inline-block;
+	padding:2px 5px;
+	background-color:#666;
+	font-size:11px;
+	color:#fff;
+}
+.list-product .sticker {
+	position:absolute;
+	top:-74px;
+	right:10px;
+}
+</style>
+
+<h3>2단 리스트</h3>
+<ul class="list-product type2" data-list-type="type2"></ul>
+<h3>3단 리스트</h3>
+<ul class="list-product type3" data-list-type="type3"></ul>
+
+<script type="text/javascript">
+var listData = [
+	{
+		title: "[플러스] 하기스 매직밴드 기저귀",
+		subText: "밤 1시주문건까지 당일출고!",
+		image: "http://image.wemakeprice.com/dealimg/201510/725000/1304bb7f10adbb9337e7c9a4d14069f1bd6f72be.jpg",
+		priceType: "위메프가",
+		priceOrder: "32,900",
+		orderNum: "14931",
+		delivery: "free",
+		stickerUrl: "http://image.wemakeprice.com/images/resources/wmp/pages/deal_list/sticker-wmpplus.png?modify_D=20160215_01",
+		stickerAlt: "위메프 plus"
+	},
+	{
+		title: "[플러스] 하기스 매직밴드 기저귀22",
+		subText: "밤 2시주문건까지 당일출고!",
+		image: "http://image.wemakeprice.com/dealimg/201509/688433/f427e3b1e1eb7fa2af84786676387b373b3ecba4.jpg",
+		priceType: "50%",
+		priceOrder: "15,750",
+		orderNum: "123",
+		stickerUrl: "http://image.wemakeprice.com/images/sticker/sticker1461232272_3e593d8b8cea38c37a047816cd96f9240f29e043.png",
+		stickerAlt: "2천원 쿠폰"
+	},
+	{
+		title: "[플러스] 하기스 매직밴드 기저귀33",
+		subText: "밤 3시주문건까지 당일출고!",
+		image: "http://image.wemakeprice.com/dealimg/201604/1080631/74dd258caf8df8445e86614ae240f1ecc2f5f327.jpg",
+		priceType: "50%",
+		priceOrder: "15,750",
+		orderNum: "456",
+		delivery: "condition",
+		stickerUrl: "http://image.wemakeprice.com/images/sticker/sticker1461232272_3e593d8b8cea38c37a047816cd96f9240f29e043.png",
+		stickerAlt: "2천원 쿠폰"
+	},
+	{
+		title: "[플러스] 하기스 매직밴드 기저귀44",
+		subText: "밤 3시주문건까지 당일출고!",
+		image: "http://image.wemakeprice.com/dealimg/201604/1080631/74dd258caf8df8445e86614ae240f1ecc2f5f327.jpg",
+		priceType: "50%",
+		priceOrder: "15,750",
+		orderNum: "456",
+		delivery: "condition",
+		stickerUrl: "http://image.wemakeprice.com/images/sticker/sticker1461232272_3e593d8b8cea38c37a047816cd96f9240f29e043.png",
+		stickerAlt: "2천원 쿠폰"
+	}
+];
+
+(function(root, $) {
+
+	'use strict';
+
+	function List($elem, data) {
+		this.element = $elem;
+
+		this.bindData = {
+			title: data.title,
+			subText: data.subText,
+			image: data.image,
+			priceType: data.priceType,
+			sale: data.sale,
+			priceOrder: data.priceOrder,
+			orderNum: data.orderNum
+		};
+
+		this.defaultData = {
+			delivery: data.delivery,
+			stickerUrl: data.stickerUrl,
+			stickerAlt: data.stickerAlt
+		};
+
+		this.initialize(data);
+	}
+
+	List.prototype = {
+		initialize: function(data) {
+			this.bindData = $.extend({}, this.defaultData, data || {});
+
+			// creat base container
+			this.createContainers();
+
+			// delivery type 제어
+			this.setDelivery();
+
+			// sticker type 제어
+			this.setSticker();
+		},
+
+		createContainers: function() {
+			var baseDom = '';
+
+			baseDom += '<li>';
+			baseDom += '	<a href="javascript:;">';
+			baseDom += '		<img src="' + this.bindData.image + '" class="thumb" alt="' + this.bindData.title + '">';
+			baseDom += '		<span class="product-info">';
+			baseDom += '			<span class="title-sub">' + this.bindData.subText + '</span>';
+			baseDom += '			<span class="title-main">' + this.bindData.title + '</span>';
+			baseDom += '			<span class="wrap-info">';
+			baseDom += '				<span class="price-area">';
+			baseDom += '					<span class="type">' + this.bindData.priceType + '</span>';
+			baseDom += '					<span class="price">' + this.bindData.priceOrder + '</span>';
+			baseDom += '					<span class="won">원</span>';
+			baseDom += '				</span>';
+			baseDom += '				<span class="order-area">';
+			baseDom += '					' + this.bindData.orderNum;
+			baseDom += '					<span class="txt">개 구매</span>';
+			baseDom += '				</span>';
+			baseDom += '			</span>';
+			baseDom += '		</span>';
+			baseDom += '	</a>';
+			baseDom += '</li>';
+
+			this.element.append(baseDom);
+		},
+
+		createDeliveryDom: function($elem, text) {
+			var dom = '';
+			dom += '<span class="delivery">';
+			dom += '	<span class="free">' + text + '</span>';
+			dom += '</span>';
+
+			this.element.find('.product-info').append(dom);
+		},
+
+		createStickerDom: function() {
+			var dom = '';
+			dom += '<span class="sticker">';
+			dom += '	<img src="' + this.bindData.stickerUrl + '" alt="' + this.bindData.stickerAlt + '">';
+			dom += '</span>';
+
+			this.element.find('.product-info').append(dom);
+		},
+
+		setDelivery: function() {
+			if (this.bindData.delivery) {
+				if (this.bindData.delivery === 'free') {
+					this.createDeliveryDom(this.element, '무료배송');
+				} else if (this.bindData.delivery === 'condition') {
+					this.createDeliveryDom(this.element, '조건부 무료');
+				}
+			}
+		},
+
+		setSticker: function() {
+			if (this.bindData.stickerUrl) {
+				this.createStickerDom(this.element);
+			}
+		}
+	};
+
+	jQuery.fn.CreateList = function(data) {
+		//return this.each(function(){
+			var idx = $(this).find('li').length;
+			$(this).data('list'+idx, new List($(this), data));
+		//})
+	}
+}(window, jQuery));
+
+$('[data-list-type=type3]').CreateList(listData[0]);
+$('[data-list-type=type3]').CreateList(listData[1]);
+$('[data-list-type=type3]').CreateList(listData[2]);
+
+</script>
+
+</body>
+</html>

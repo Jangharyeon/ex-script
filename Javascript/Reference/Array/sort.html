@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<h1>sort()</h1>
+
+<script type="text/javascript">
+
+var aaa = [1, 10, 2, 21];
+console.log(aaa.sort());
+
+var bbb = ['a', 'c', 'b', 'd'];
+console.log(bbb.sort());
+
+var ccc = ['일', '이', '삼', '사'];
+console.log(ccc.sort());
+
+var ddd = [40, 100, 1, 5, 25, 10];
+ddd.sort(function(a, b) {return a-b});
+console.log('숫자 순서 정렬', ddd);
+
+ddd.sort(function(a, b) {return b-a});
+console.log('숫자 역순 정렬', ddd);
+
+var eee = [
+	{name: 'aa', value: 21},
+	{name: 'bb', value: 37},
+	{name: 'cc', value: 45},
+	{name: 'dd', value: -12},
+	{name: 'ee'},
+	{name: 'ff', value: 37}
+];
+eee.sort(function(a, b) {
+	if (a.value > b.value) {
+		return 1;
+	}
+	if (a.value < b.value) {
+		return -1;
+	}
+	return 0;
+});
+for (prop in eee) {
+	console.log('name: ', eee[prop].name, 'value: ', eee[prop].value);
+}
+
+</script>
+
+</body>
+</html>

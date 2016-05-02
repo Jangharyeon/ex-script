@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<h1>concat()</h1>
+
+<script type="text/javascript">
+
+var aaa = [1,2,3,4,5,6,7];
+var bbb = ['aa', 'bb', 'cc', 'dd'];
+var ccc = ['일', '이', '삼', '사'];
+
+console.log('배열 2개 각각 선언', aaa, bbb);
+console.log('concat 배열 2개 붙이기', aaa.concat(bbb));
+console.log('concat 배열 3개 붙이기', aaa.concat(bbb, ccc));
+console.log('aaa 배열에 값 이어 붙이기', aaa.concat(1, [2, 3]));
+
+</script>
+
+</body>
+</html>

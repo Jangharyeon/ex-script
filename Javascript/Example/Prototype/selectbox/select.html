@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+</head>
+<body>
+
+<style type="text/css">
+*,
+:before,
+:after {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+body {
+	margin:0;
+	padding:20px;
+}
+ul {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+
+.select {
+	display:inline-block;
+	position:relative;
+}
+.select > a {
+	display:block;
+	position:relative;
+	height:30px;
+	padding:0 30px 0 10px;
+	border:1px solid #ccc;
+	font-size:14px;
+	line-height:30px;
+	color:#333;
+	text-decoration:none;
+	white-space:nowrap;
+}
+.select > a:hover,
+.select > a.active {
+	background-color:#f9f9f9;
+}
+.select > a:after {
+	position:absolute;
+	top:50%;
+	right:10px;
+	margin-top:-2px;
+	border-width:4px 4px 0;
+	border-style:solid;
+	border-color:#333 transparent transparent;
+	content:'';
+}
+.select > ul {
+	display:none;
+	position:absolute;
+	top:100%;
+	right:0;
+	left:0;
+	margin-top:-1px;
+	padding:5px 0;
+	border:1px solid #ccc;
+}
+.select > ul > li > a {
+	display:block;
+	padding:5px 10px;
+	font-size:12px;
+	color:#666;
+	text-decoration:none;
+}
+.select > ul > li > a:hover,
+.select > ul > li.active > a {
+	background-color:#f9f9f9;
+}
+.select.active > ul {
+	display:block;
+}
+</style>
+
+<div class="select" data-id="select-custom">
+	<a href="javascript:;" class="btn-toggle" data-select-toggle>Select box1</a>
+	<ul class="list-menu" data-select-option>
+		<li>
+			<a href="javascript:;">Menu 01</a>
+		</li>
+		<li>
+			<a href="javascript:;">Menu 02</a>
+		</li>
+		<li>
+			<a href="javascript:;">Menu 03</a>
+		</li>
+	</ul>
+</div>
+
+<div class="select" data-id="select-custom">
+	<a href="javascript:;" class="btn-toggle" data-select-toggle>Select box2</a>
+	<ul class="list-menu" data-select-option>
+		<li>
+			<a href="javascript:;">Menu 01</a>
+		</li>
+		<li>
+			<a href="javascript:;">Menu 02</a>
+		</li>
+		<li>
+			<a href="javascript:;">Menu 03</a>
+		</li>
+	</ul>
+</div>
+
+<div class="select" data-id="select-custom">
+	<a href="javascript:;" class="btn-toggle" data-select-toggle>Select box3</a>
+	<ul class="list-menu" data-select-option>
+		<li>
+			<a href="javascript:;">Menu 01</a>
+		</li>
+		<li>
+			<a href="javascript:;">Menu 02</a>
+		</li>
+		<li>
+			<a href="javascript:;">Menu 03</a>
+		</li>
+	</ul>
+</div>
+
+<script type="text/javascript">
+
+(function(root, $) {
+	function Select($elem, opts) {
+		this.element = $elem;
+		this.singleOpen = true;
+
+		this.status = {
+			isOpen: false
+		};
+
+		this.prefixes = {
+			button: 'select-toggle',
+			option: 'select-option'
+		};
+
+		this.$elements = {
+			buttons: null,
+			options: null,
+			optionsLast: null
+		};
+
+		this.activateClass = 'active';
+
+		this.initialize();
+	}
+
+	Select.prototype = {
+		initialize: function() {
+			// Set elements
+			this.setElements();
+
+			// Bind event
+			this.bindEvents();
+		},
+
+		setElements: function() {
+			var self = this,
+				prefixes = self.prefixes;
+
+			var $elem = self.element,
+				$elems = self.$elements;
+
+			$elems.buttons = $elem.findDataElements(prefixes.button);
+			$elems.options = $elem.findDataElements(prefixes.option);
+			$elems.optionsLast = $elems.options.find('li:last-child a');
+		},
+
+		bindEvents: function() {
+			// Toggle event
+			this.$elements.buttons.on('click', this.toggle.bind(this));
+			this.$elements.optionsLast.on('focusout', this.focusoutClose.bind(this));
+
+			$(document).on('click', this.allClose.bind(this));
+		},
+
+		activate: function() {
+			this.element.addClass(this.activateClass);
+			this.status.isOpen = true;
+		},
+
+		inactivate: function() {
+			this.element.removeClass(this.activateClass);
+			this.status.isOpen = false;
+		},
+
+		focusoutClose: function(e) {
+			this.inactivate();
+		},
+
+		toggle: function() {
+			var isOpen = this.status.isOpen === true;
+
+			if (!isOpen) {
+				this.activate();
+			} else {
+				this.inactivate();
+			}
+		},
+
+		hasActivate: function() {
+			return this.element.hasClass(this.activateClass);
+		},
+
+		allClose: function(e) {
+			var hasTargetNone = $(e.target).parents(this.element).length === 0;
+
+			if (this.hasActivate() && hasTargetNone) {
+				console.log(this.element.index());
+				this.inactivate();
+			}
+		}
+	};
+
+	$.fn.extend({
+		findDataElements: function(key) {
+			return $(this).find('[data-' + key + ']');
+		},
+
+		selectbox: function() {
+			return this.each(function() {
+				var $this = $(this),
+					instanceKey = 'selectbox';
+
+				instance = new Select($this);
+				$this.data(instanceKey, instance);
+			});
+		}
+	});
+}(window, jQuery));
+
+$('[data-id=select-custom]').selectbox();
+
+</script>
+
+</body>
+</html>

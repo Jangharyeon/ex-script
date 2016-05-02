@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<h1>push()</h1>
+
+<script type="text/javascript">
+
+var aaa = [1,2,3,4];
+var bbb = aaa.push(5, 6);
+
+console.log('aaa', aaa);
+console.log('aaa 에 bbb를 push 후 bbb값', bbb);
+
+var ccc = ['aa', 'bb', 'cc'];
+var ddd = ['dd', 'ee', 'ff'];
+
+console.log('ccc', ccc);
+console.log('ddd', ddd);
+
+Array.prototype.push.apply(ccc, ddd);
+console.log('ccc 에 ddd 를 push', ccc);
+
+</script>
+
+</body>
+</html>
