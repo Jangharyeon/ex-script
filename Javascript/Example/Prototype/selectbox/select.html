@@ -64,6 +64,7 @@ ul {
 	margin-top:-1px;
 	padding:5px 0;
 	border:1px solid #ccc;
+	background-color:#fff;
 }
 .select > ul > li > a {
 	display:block;
@@ -76,54 +77,88 @@ ul {
 .select > ul > li.active > a {
 	background-color:#f9f9f9;
 }
+.select.active {
+	z-index:1;
+}
 .select.active > ul {
 	display:block;
 }
 </style>
 
-<div class="select" data-id="select-custom">
-	<a href="javascript:;" class="btn-toggle" data-select-toggle>Select box1</a>
-	<ul class="list-menu" data-select-option>
-		<li>
-			<a href="javascript:;">Menu 01</a>
-		</li>
-		<li>
-			<a href="javascript:;">Menu 02</a>
-		</li>
-		<li>
-			<a href="javascript:;">Menu 03</a>
-		</li>
-	</ul>
+<div>
+	<div class="select" data-id="select">
+		<a href="javascript:;" class="btn-toggle" data-select="toggle">Select box3</a>
+		<ul class="list-menu" data-select="option">
+			<li>
+				<a href="javascript:;">Menu 01</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 02</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 03</a>
+			</li>
+		</ul>
+	</div>
+	<div class="select" data-id="select">
+		<a href="javascript:;" class="btn-toggle" data-select="toggle">Select box3</a>
+		<ul class="list-menu" data-select="option">
+			<li>
+				<a href="javascript:;">Menu 01</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 02</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 03</a>
+			</li>
+		</ul>
+	</div>
+	<div class="select" data-id="select">
+		<a href="javascript:;" class="btn-toggle" data-select="toggle">Select box3</a>
+		<ul class="list-menu" data-select="option">
+			<li>
+				<a href="javascript:;">Menu 01</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 02</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 03</a>
+			</li>
+		</ul>
+	</div>
 </div>
 
-<div class="select" data-id="select-custom">
-	<a href="javascript:;" class="btn-toggle" data-select-toggle>Select box2</a>
-	<ul class="list-menu" data-select-option>
-		<li>
-			<a href="javascript:;">Menu 01</a>
-		</li>
-		<li>
-			<a href="javascript:;">Menu 02</a>
-		</li>
-		<li>
-			<a href="javascript:;">Menu 03</a>
-		</li>
-	</ul>
-</div>
-
-<div class="select" data-id="select-custom">
-	<a href="javascript:;" class="btn-toggle" data-select-toggle>Select box3</a>
-	<ul class="list-menu" data-select-option>
-		<li>
-			<a href="javascript:;">Menu 01</a>
-		</li>
-		<li>
-			<a href="javascript:;">Menu 02</a>
-		</li>
-		<li>
-			<a href="javascript:;">Menu 03</a>
-		</li>
-	</ul>
+<div>
+	<div class="select" data-id="select2">
+		<a href="javascript:;" class="btn-toggle" data-select="toggle">Select box3</a>
+		<ul class="list-menu" data-select="option">
+			<li>
+				<a href="javascript:;">Menu 01</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 02</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 03</a>
+			</li>
+		</ul>
+	</div>
+	<div class="select" data-id="select2">
+		<a href="javascript:;" class="btn-toggle" data-select="toggle">Select box3</a>
+		<ul class="list-menu" data-select="option">
+			<li>
+				<a href="javascript:;">Menu 01</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 02</a>
+			</li>
+			<li>
+				<a href="javascript:;">Menu 03</a>
+			</li>
+		</ul>
+	</div>
 </div>
 
 <script type="text/javascript">
@@ -131,15 +166,14 @@ ul {
 (function(root, $) {
 	function Select($elem, opts) {
 		this.element = $elem;
-		this.singleOpen = true;
 
 		this.status = {
 			isOpen: false
 		};
 
 		this.prefixes = {
-			button: 'select-toggle',
-			option: 'select-option'
+			button: 'toggle',
+			option: 'option'
 		};
 
 		this.$elements = {
@@ -150,11 +184,11 @@ ul {
 
 		this.activateClass = 'active';
 
-		this.initialize();
+		this.initialize(opts);
 	}
 
 	Select.prototype = {
-		initialize: function() {
+		initialize: function(opts) {
 			// Set elements
 			this.setElements();
 
@@ -179,7 +213,7 @@ ul {
 			this.$elements.buttons.on('click', this.toggle.bind(this));
 			this.$elements.optionsLast.on('focusout', this.focusoutClose.bind(this));
 
-			$(document).on('click', this.allClose.bind(this));
+			$(document).on('click', this.noneTargetClose.bind(this));
 		},
 
 		activate: function() {
@@ -187,13 +221,13 @@ ul {
 			this.status.isOpen = true;
 		},
 
-		inactivate: function() {
+		deactivate: function() {
 			this.element.removeClass(this.activateClass);
 			this.status.isOpen = false;
 		},
 
 		focusoutClose: function(e) {
-			this.inactivate();
+			this.deactivate();
 		},
 
 		toggle: function() {
@@ -202,27 +236,26 @@ ul {
 			if (!isOpen) {
 				this.activate();
 			} else {
-				this.inactivate();
+				this.deactivate();
 			}
 		},
 
-		hasActivate: function() {
-			return this.element.hasClass(this.activateClass);
-		},
+		noneTargetClose: function(e) {
+			var dataId = this.element.attr('data-id');
 
-		allClose: function(e) {
-			var hasTargetNone = $(e.target).parents(this.element).length === 0;
+			var hasActivate = this.element.hasClass(this.activateClass),
+				hasTargetNone = $(e.target).parents('[data-id=' + dataId + ']').length === 0,
+				isNoneTarget = hasActivate && hasTargetNone;
 
-			if (this.hasActivate() && hasTargetNone) {
-				console.log(this.element.index());
-				this.inactivate();
+			if (isNoneTarget) {
+				this.deactivate();
 			}
 		}
 	};
 
 	$.fn.extend({
 		findDataElements: function(key) {
-			return $(this).find('[data-' + key + ']');
+			return $(this).find('[data-select=' + key + ']');
 		},
 
 		selectbox: function() {
@@ -237,7 +270,8 @@ ul {
 	});
 }(window, jQuery));
 
-$('[data-id=select-custom]').selectbox();
+$('[data-id=select]').selectbox();
+$('[data-id=select2]').selectbox();
 
 </script>
 
