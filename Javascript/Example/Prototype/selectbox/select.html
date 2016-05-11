@@ -241,10 +241,8 @@ ul {
 		},
 
 		noneTargetClose: function(e) {
-			var dataId = this.element.attr('data-id');
-
 			var hasActivate = this.element.hasClass(this.activateClass),
-				hasTargetNone = $(e.target).parents('[data-id=' + dataId + ']').length === 0,
+				hasTargetNone = this.element.has(e.target).length === 0,
 				isNoneTarget = hasActivate && hasTargetNone;
 
 			if (isNoneTarget) {
